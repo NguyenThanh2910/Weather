@@ -40,8 +40,8 @@ const WeatherDetails = ({
         color: {
           linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
           stops: [
-            [0, "rgba(75,0,130, 0.3)"],
-            [1, "rgba(75,0,130, 0.2)"],
+            [0, "rgba(79, 70, 229, 0.5)"],
+            [1, "rgba(79, 70, 229, 0.2)"],
           ],
         },
         fillOpacity: 0.5,
@@ -54,7 +54,7 @@ const WeatherDetails = ({
         name: "Tốc độ gió",
         type: "spline",
         data: windData.map((data) => data.speed),
-        color: "indigo",
+        color: "#4F46E5",
         marker: {
           enabled: false,
         },
@@ -70,14 +70,14 @@ const WeatherDetails = ({
           <div className="flex justify-between items-center">
             <div className="flex flex-col items-center justify-center w-1/2">
               <div className="flex items-center mb-6">
-                <WiHumidity className="text-3xl text-indigo-600 mr-2" />
+                <WiHumidity className="text-3xl text-indigo-500 mr-2" />
                 <div className="flex flex-col">
                   <h3 className="text-sm font-semibold text-gray-800">Độ ẩm</h3>
                   <p className="text-black font-bold">{humidity}%</p>
                 </div>
               </div>
               <div className="flex items-center ml-5">
-                <WiStrongWind className="text-3xl text-indigo-600 mr-2" />
+                <WiStrongWind className="text-3xl text-indigo-500 mr-2" />
                 <div className="flex flex-col">
                   <h3 className="text-sm font-semibold text-gray-800">Gió</h3>
                   <p className="text-black font-bold">{speedWind}km/h</p>
@@ -87,7 +87,7 @@ const WeatherDetails = ({
             <hr className="border-l-2 border-gray-300 h-40 mx-6" />
             <div className="flex flex-col items-center justify-center w-1/2">
               <div className="flex items-center mb-6">
-                <WiSunrise className="text-3xl text-indigo-600 mr-2" />
+                <WiSunrise className="text-3xl text-indigo-500 mr-2" />
                 <div className="flex flex-col">
                   <h3 className="text-sm font-semibold text-gray-800">
                     Mặt trời mọc
@@ -96,7 +96,7 @@ const WeatherDetails = ({
                 </div>
               </div>
               <div className="flex items-center">
-                <WiSunset className="text-3xl text-indigo-600 mr-2" />
+                <WiSunset className="text-3xl text-indigo-500 mr-2" />
                 <div className="flex flex-col">
                   <h3 className="text-sm font-semibold text-gray-800">
                     Mặt trời lặn
@@ -107,17 +107,17 @@ const WeatherDetails = ({
             </div>
           </div>
         </div>
-        <div className="bg-gradient-to-r from-indigo-300 to-indigo-600  shadow-md p-4 border rounded-lg mt-4">
+        <div className="bg-gradient-to-r from-indigo-300 to-indigo-500  shadow-md p-4 border rounded-lg mt-4">
           <div className="flex justify-between items-center">
             <div className="flex flex-col items-center">
-              <WiRain className="text-3xl text-indigo-600 mb-2" />
+              <WiRain className="text-3xl text-blue-700 mb-2" />
               <h3 className="text-xs font-semibold text-white">
                 Lượng mưa hiện tại
               </h3>
               <p className="text-white  font-bold">{currentRain} mm</p>
             </div>
             <div className="flex flex-col items-center">
-              <WiRain className="text-3xl text-indigo-600 mb-2" />
+              <WiRain className="text-3xl text-blue-700 mb-2" />
               <h3 className="text-xs font-semibold text-white">
                 Lượng mưa ngày mai
               </h3>

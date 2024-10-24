@@ -78,14 +78,14 @@ const Weather = () => {
     : [];
   return (
     <div className="w-full h-screen flex items-start justify-center bg-gray-100">
-      <div className="max-w-6xl w-full bg-white border-2 border-indigo-600 shadow-lg rounded-lg p-6 mt-6 flex flex-col">
+      <div className="max-w-6xl w-full bg-white border-2 border-indigo-500 shadow-lg rounded-lg p-6 mt-6 flex flex-col">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-4xl text-indigo-500 font-bold">Weather</h2>
           <div className="relative">
             <input
               type="text"
               placeholder="Search... "
-              className="border border-gray-300 rounded-lg p-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
+              className="border border-gray-300 rounded-lg p-2 pr-10 focus:outline-none focus:ring-2 focus:ring-indigo-500 w-64"
               value={city}
               onChange={(e) => setCity(e.target.value)}
             />
