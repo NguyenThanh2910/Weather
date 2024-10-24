@@ -1,57 +1,135 @@
 // WeatherDetails.js
-import React from 'react';
-import { WiHumidity, WiStrongWind, WiSunrise, WiSunset } from 'react-icons/wi';
+import React from "react";
+import {
+  WiHumidity,
+  WiRain,
+  WiStrongWind,
+  WiSunrise,
+  WiSunset,
+} from "react-icons/wi";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 
-const WeatherDetails = ({ speedWind, humidity, sunrise, sunset, dailyForecast }) => {
+const WeatherDetails = ({
+  speedWind,
+  humidity,
+  sunrise,
+  sunset,
+  dailyForecast,
+  nextDayRain,
+  currentRain,
+  windData,
+}) => {
+  const options = {
+    title: {
+      text: "Lượng gió theo thời gian",
+    },
+    xAxis: {
+      categories: windData.map((data) => data.time),
+    },
+    yAxis: {
+      title: {
+        text: "Tốc độ gió (km/h)",
+      },
+    },
+    series: [
+      {
+        name: "Khu vực gió (Lượn sóng)",
+        type: "areaspline",
+        data: windData.map((data) => data.speed),
+        color: {
+          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+          stops: [
+            [0, "rgba(75,0,130, 0.3)"],
+            [1, "rgba(75,0,130, 0.2)"],
+          ],
+        },
+        fillOpacity: 0.5,
+        marker: {
+          enabled: false,
+        },
+        lineWidth: 2,
+      },
+      {
+        name: "Tốc độ gió",
+        type: "spline",
+        data: windData.map((data) => data.speed),
+        color: "indigo",
+        marker: {
+          enabled: false,
+        },
+        lineWidth: 2,
+      },
+    ],
+  };
+
   return (
-    <div className="  mt-4  grid grid-cols-12 gap-4">
-      {/* Phần hiển thị độ ẩm, gió, mặt trời mọc và lặn - Chiếm 4 phần (0-3) */}
-      <div className="col-span-4 flex rounded-md shadow p-4">
-        {/* Phần bên trái - Độ ẩm và Gió */}
-        <div className="flex-1 flex flex-col items-center justify-center pr-6">
-          <div className="flex items-center mb-4">
-            <WiHumidity className="text-4xl text-blue-500 mr-3" />
-            <div className="flex flex-col items-center">
-              <h3 className="text-xl font-semibold text-gray-800">Độ ẩm</h3>
-              <p className="text-gray-600">{humidity}%</p>
+    <div className="mt-12 grid grid-cols-12 gap-4">
+      <div className="col-span-4 flex flex-col">
+        <div className="pb-4 mb-4 border border-gray-300 rounded-md p-6">
+          <div className="flex justify-between items-center">
+            <div className="flex flex-col items-center justify-center w-1/2">
+              <div className="flex items-center mb-6">
+                <WiHumidity className="text-3xl text-indigo-600 mr-2" />
+                <div className="flex flex-col">
+                  <h3 className="text-sm font-semibold text-gray-800">Độ ẩm</h3>
+                  <p className="text-black font-bold">{humidity}%</p>
+                </div>
+              </div>
+              <div className="flex items-center ml-5">
+                <WiStrongWind className="text-3xl text-indigo-600 mr-2" />
+                <div className="flex flex-col">
+                  <h3 className="text-sm font-semibold text-gray-800">Gió</h3>
+                  <p className="text-black font-bold">{speedWind}km/h</p>
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div className="flex items-center">
-            <WiStrongWind className="text-4xl text-blue-500 mr-3" />
-            <div className="flex flex-col items-center">
-              <h3 className="text-xl font-semibold text-gray-800">Gió</h3>
-              <p className="text-gray-600">{speedWind} km/h</p>
+            <hr className="border-l-2 border-gray-300 h-40 mx-6" />
+            <div className="flex flex-col items-center justify-center w-1/2">
+              <div className="flex items-center mb-6">
+                <WiSunrise className="text-3xl text-indigo-600 mr-2" />
+                <div className="flex flex-col">
+                  <h3 className="text-sm font-semibold text-gray-800">
+                    Mặt trời mọc
+                  </h3>
+                  <p className="text-black font-bold">{sunrise}</p>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <WiSunset className="text-3xl text-indigo-600 mr-2" />
+                <div className="flex flex-col">
+                  <h3 className="text-sm font-semibold text-gray-800">
+                    Mặt trời lặn
+                  </h3>
+                  <p className="text-black font-bold">{sunset}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Đường phân cách thẳng đứng */}
-        <div className="border-l border-gray-300 mx-4 h-full"></div>
-
-        {/* Phần bên phải - Mặt trời mọc và Mặt trời lặn */}
-        <div className="flex-1 flex flex-col items-center justify-center pl-6">
-          <div className="flex items-center mb-4">
-            <WiSunrise className="text-4xl text-blue-500 mr-3" />
+        <div className="bg-gradient-to-r from-indigo-300 to-indigo-600  shadow-md p-4 border rounded-lg mt-4">
+          <div className="flex justify-between items-center">
             <div className="flex flex-col items-center">
-              <h3 className="text-xl font-semibold text-gray-800">Mặt trời mọc</h3>
-              <p className="text-gray-600">{sunrise}</p>
+              <WiRain className="text-3xl text-indigo-600 mb-2" />
+              <h3 className="text-xs font-semibold text-white">
+                Lượng mưa hiện tại
+              </h3>
+              <p className="text-white  font-bold">{currentRain} mm</p>
             </div>
-          </div>
-
-          <div className="flex items-center">
-            <WiSunset className="text-4xl text-blue-500 mr-3" />
             <div className="flex flex-col items-center">
-              <h3 className="text-xl font-semibold text-gray-800">Mặt trời lặn</h3>
-              <p className="text-gray-600">{sunset}</p>
+              <WiRain className="text-3xl text-indigo-600 mb-2" />
+              <h3 className="text-xs font-semibold text-white">
+                Lượng mưa ngày mai
+              </h3>
+              <p className="text-green-500  font-bold">{nextDayRain} mm</p>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Phần dự báo thời tiết - Chiếm 8 phần (4-11) */}
-      <div className="bg-white p-4 rounded-lg shadow-lg col-span-8 grid grid-cols-7 mt-4 gap-4">
-       
+      <div className="bg-white border p-4 rounded-lg shadow-lg col-span-8 grid grid-cols-6 gap-4">
+        <div className="col-span-8">
+          <HighchartsReact highcharts={Highcharts} options={options} />
+        </div>
         {dailyForecast.map((day, index) => (
           <div key={index} className="flex flex-col items-center relative">
             <h2 className="text-lg font-semibold text-gray-800">{day.day}</h2>
@@ -60,13 +138,9 @@ const WeatherDetails = ({ speedWind, humidity, sunrise, sunset, dailyForecast })
               alt={`Icon thời tiết cho ${day.day}`}
               className="w-10 h-10 mb-2"
             />
-            <p className="text-sm font-bold text-blue-600">{day.temperature}°C</p>
-
-            {/* Thêm đường phân cách dọc */}
+            <p className="text-sm font-bold text-black">{day.temperature}°</p>
             {index < dailyForecast.length - 1 && (
-              <div className="absolute top-0 right-0 h-full flex items-center" style={{ width: '2px', height: '80px' }}>
-                <hr className="border-l border-gray-300 h-full" />
-              </div>
+              <div className="absolute top-0 right-0 h-full border-l border-gray-300"></div>
             )}
           </div>
         ))}
